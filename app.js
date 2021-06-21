@@ -32,18 +32,23 @@ const item3 = new Item ({
 
 const defaultItems = [item1,item2,item3]
 
-// Item.insertMany(defaultItems,function(err){
-//   if(err){
-//     console.log(err);
-//   }else{
-//     console.log('Successfully Save default items to Database');
-//   }
-// })
 
 app.get('/', (req, res) => {
 
 Item.find({},function(err,foundItems){
-  res.render('list', {listTitle: day, newListItems: foundItems})
+  if(foundItems===0){
+    Item.insertMany(defaultItems,function(err){
+      if(err){
+        console.log(err);
+      }else{
+        console.log('Successfully Save default items to Database');
+      }
+    })
+    res.redirect('/')
+  }else{
+    res.render('list', {listTitle: day, newListItems: foundItems})
+  }
+
 })
 
   const day = date.getDate()
