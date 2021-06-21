@@ -64,14 +64,12 @@ Item.find({},function(err,foundItems){
 // })
 
 app.post('/', function(req, res) {
-  const item = req.body.newItem
-  if(req.body.list==='work'){
-    workItem.push(item)
-    res.redirect('/work')
-  }else {
-    items.push(item)
-    res.redirect('/')
-  }
+  const itemName = req.body.newItem
+ const item = new Item({
+   name: itemName
+ })
+ item.save()
+ res.redirect('/')
 
 })
 
