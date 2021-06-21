@@ -79,11 +79,15 @@ Item.findByIdAndRemove(checkItmemId,function(err){
 
 })
 
-
-app.get('/work',function(req,res){
-  const day = date.getOnlyDay()
-  res.render('list',{listTitle: day +'s, Work', newListItems: workItem})
+app.get('/:customListName',function(req,res){
+  console.log(req.params.customListName);
 })
+
+
+// app.get('/work',function(req,res){
+//   const day = date.getOnlyDay()
+//   res.render('list',{listTitle: day +'s, Work', newListItems: workItem})
+// })
 
 app.get('/about',function(req,res){
   res.render('about')
