@@ -31,7 +31,11 @@ const item3 = new Item ({
 })
 
 const defaultItems = [item1,item2,item3]
-
+const listSchema = {
+  name: String,
+  items = [itemsSchema]
+}
+const list = mongoose.model('list',listSchema)
 
 app.get('/', (req, res) => {
 
@@ -80,7 +84,7 @@ Item.findByIdAndRemove(checkItmemId,function(err){
 })
 
 app.get('/:customListName',function(req,res){
-  console.log(req.params.customListName);
+  const customListName = req.params.customListName
 })
 
 
