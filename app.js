@@ -64,20 +64,20 @@ app.get('/:customListName',function(req,res){
 List.findOne({name: customListName},function(err,foundList){
   if(!err){
     if(!foundList){
-      console.log("Doesn't Exist");
+      // create a new list
+      const list = new List({
+        name:customListName,
+        items: defaultItems
+      })
+    list.save()
+    res.redirect('list' + customListName)
     } else{
-      console.log("Exist");
+      // show an exist list
+      res.render('list', {listTitle: foundList.name, newListItems: foundList.items})
     }
   }
 })
 
-
-
-  const list = new List({
-    name:customListName,
-    items: defaultItems
-  })
-list.save()
 })
 
 
@@ -105,11 +105,6 @@ Item.findByIdAndRemove(checkItmemId,function(err){
 
 })
 
-
-// app.get('/work',function(req,res){
-//   const day = date.getOnlyDay()
-//   res.render('list',{listTitle: day +'s, Work', newListItems: workItem})
-// })
 
 app.get('/about',function(req,res){
   res.render('about')
