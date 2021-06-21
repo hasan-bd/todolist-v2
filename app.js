@@ -61,6 +61,18 @@ Item.find({},function(err,foundItems){
 
 app.get('/:customListName',function(req,res){
   const customListName = req.params.customListName
+List.findOne({name: customListName},function(err,foundList){
+  if(!err){
+    if(!foundList){
+      console.log("Doesn't Exist");
+    } else{
+      console.log("Exist");
+    }
+  }
+})
+
+
+
   const list = new List({
     name:customListName,
     items: defaultItems
