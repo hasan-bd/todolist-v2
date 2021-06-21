@@ -50,12 +50,12 @@ Item.find({},function(err,foundItems){
     })
     res.redirect('/')
   }else{
-    res.render('list', {listTitle: day, newListItems: foundItems})
+    res.render('list', {listTitle: 'Today', newListItems: foundItems})
   }
 
 })
 
-  const day = date.getDate()
+  // const day = date.getDate()
 
 })
 
@@ -84,11 +84,21 @@ List.findOne({name: customListName},function(err,foundList){
 
 app.post('/', function(req, res) {
   const itemName = req.body.newItem
+  const listName = req.body.list
  const item = new Item({
    name: itemName
  })
- item.save()
- res.redirect('/')
+
+ if(listName ===  'Today'){
+   item.save()
+   res.redirect('/')
+}else{
+  List.findOne({name: listName},function(err,foundList){
+    foundList.items.push(item)
+    foundList.save()
+    res.redirect('/' + listName)
+  })
+}
 
 })
 
