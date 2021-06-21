@@ -33,9 +33,9 @@ const item3 = new Item ({
 const defaultItems = [item1,item2,item3]
 const listSchema = {
   name: String,
-  items = [itemsSchema]
+  items:  [itemsSchema]
 }
-const list = mongoose.model('list',listSchema)
+const List = mongoose.model('List',listSchema)
 
 app.get('/', (req, res) => {
 
@@ -59,6 +59,16 @@ Item.find({},function(err,foundItems){
 
 })
 
+app.get('/:customListName',function(req,res){
+  const customListName = req.params.customListName
+  const list = new List({
+    name:customListName,
+    items: defaultItems
+  })
+list.save()
+})
+
+
 
 app.post('/', function(req, res) {
   const itemName = req.body.newItem
@@ -81,10 +91,6 @@ Item.findByIdAndRemove(checkItmemId,function(err){
 
 })
 
-})
-
-app.get('/:customListName',function(req,res){
-  const customListName = req.params.customListName
 })
 
 
