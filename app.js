@@ -55,13 +55,6 @@ Item.find({},function(err,foundItems){
 
 })
 
-// Item.find({},function(err,items){
-//   if(err){
-//     console.log(err);
-//   }else{
-//     console.log(items);
-//   }
-// })
 
 app.post('/', function(req, res) {
   const itemName = req.body.newItem
@@ -70,6 +63,19 @@ app.post('/', function(req, res) {
  })
  item.save()
  res.redirect('/')
+
+})
+
+app.post('/delete',function(req,res){
+  console.log(req.body.checkbox);
+  const checkItmemId = req.body.checkbox
+Item.findByIdAndRemove(checkItmemId,function(err){
+  if(!err){
+    console.log("Successfully Remove Item");
+    res.redirect('/')
+  }
+
+})
 
 })
 
